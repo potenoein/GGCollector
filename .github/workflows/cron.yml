@@ -1,0 +1,50 @@
+name: Make it rain
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [trigger-cron]
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Instalar dependências
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+        run: npm ci
+
+      - name: Executar Script
+        env:
+          ACCESS_USERNAME: ${{ secrets.ACCESS_USERNAME }}
+          ACCESS_PASSWORD: ${{ secrets.ACCESS_PASSWORD }}
+          ACCESS_URL: ${{ secrets.ACCESS_URL }}
+        run: node index.js
+      
+      # Descomente para testes ou troubleshooting
+      #- name: Upload Screenshot Final
+      #  if: always()
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    name: screenshot-resultado
+      #    path: resultado.png
+      #    if-no-files-found: ignore
+
+      - name: Upload Screenshot de Erro
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshot-erro
+          path: erro.png
+          if-no-files-found: ignore
