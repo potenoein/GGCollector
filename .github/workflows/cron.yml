@@ -33,13 +33,13 @@ jobs:
         run: node index.js
       
       # Descomente para testes ou troubleshooting
-      - name: Upload Screenshot Final
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: screenshot-resultado
-          path: resultado.png
-          if-no-files-found: ignore
+      #- name: Upload Screenshot Final
+      #  if: always()
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    name: screenshot-resultado
+      #    path: resultado.png
+      #    if-no-files-found: ignore
 
       - name: Upload Screenshot de Erro
         if: failure()
