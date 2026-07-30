@@ -1,0 +1,13 @@
+{
+  "name": "gems-gold-collector",
+  "version": "3.7.0",
+  "description": "Automação de coleta de Gem e Gold",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "puppeteer": "^24.1.0",
+    "@ghostery/adblocker-puppeteer": "^2.10.0"
+  }
+}
